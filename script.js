@@ -34,6 +34,23 @@ var tips_array = [
     img_interval = 8000;
 
 window.onload = function () {
+    // Воспроизведение музыки
+    var music = document.getElementById('backgroundMusic');
+    
+    // Попытка автоматического воспроизведения
+    var playPromise = music.play();
+    
+    // Обработка возможных ошибок автовоспроизведения
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log("Автовоспроизведение не сработало, требуется взаимодействие пользователя");
+            // Добавляем обработчик клика для ручного запуска музыки
+            window.addEventListener('click', function() {
+                music.play();
+            }, { once: true }); // Выполнится только один раз
+        });
+    }
+    
     window.onclick = changeTip;
     changeTip();
 
@@ -51,3 +68,4 @@ window.onload = function () {
         setTimeout(changeBg, img_interval);
     };
 }
+
