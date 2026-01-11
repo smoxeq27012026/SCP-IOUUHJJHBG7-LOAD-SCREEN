@@ -1,0 +1,114 @@
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+
+<style>
+    @font-face {
+        font-family: "Bebas Regular";
+        src: url('fonts/Bebas-Regular.otf') format("truetype");
+    }
+
+    @font-face {
+        font-family: "BlackOpsOne Regular";
+        src: url('fonts/BlackOpsOne-Regular.otf') format("truetype");
+    }
+
+    @font-face {
+        font-family: "Roboto Medium";
+        src: url('fonts/Roboto-Medium.ttf') format("truetype");
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0%;
+        background-color: black;
+    }
+
+    background {
+        background-image: url('images/1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+
+        animation: fadeOut 4s infinite alternate;
+    }
+
+    @keyframes fadeOut {
+        0%,5% { opacity: 0 }
+        20% { opacity: 1 }
+    }
+
+    hintHeader {
+        font-family: "BlackOpsOne Regular";
+        color: white;
+        width: 100%;
+        text-align: center;
+        display: block;
+        resize: vertical;
+        font-size: 2vw;
+        transform: scale(1, 1.32);
+        padding-top: 5%;
+        user-select: none;
+    }
+
+    hintText {
+        font-family: "Roboto Medium";
+        color: white;
+        width: 90%;
+        text-align: justify;
+        display: block;
+        resize: vertical;
+        font-size: 1vw;
+        margin-top: 20%;
+        margin-left: 5%;
+        user-select: none;
+    }
+
+    loadingText {
+        font-family: "Bebas Regular";
+        color: rgb(125, 125, 125);
+        position: absolute;
+        bottom: 0;
+        right: 1%;
+        font-size: 3vw;
+        user-select: none;
+    }
+
+    scp939 {
+        background-image: url('images/scp939.gif');
+        background-size: cover;
+        position: absolute;
+        bottom: 30px;
+        right: 0.5vw;
+        height: 7.05vw;
+        width: 9.35vw;
+        user-select: none;
+    }
+</style>
+
+<body>
+    <background id="background"></background>
+    <div id="rectangle"
+        style="position: relative; width: 20%; height:100%; background-color: rgba(0, 0, 0, .82); margin-left: 2%;">
+        <hintHeader id="hintHeader"></hintHeader>
+        <hintText id="hintText"></hintText>
+        <div id="barBackground"
+            style="position: absolute; bottom: 5; left: 5%; right: 5%; height:0.8vw; background-color: rgb(82,82,82); user-select: none;">
+        </div>
+        <div id="bar"
+            style="position: absolute; bottom: 5; left: 5%; right: 95%; height:0.8vw; background-color: rgb(255,255,255); user-select: none;">
+        </div>
+        <div id="statusText"
+            style="position: absolute; bottom: 30; left: 5%; right: 50%; height:0.8vw; color: rgb(255,255,255); font-size: 1vw; text-align: left; user-select: none;"></div>
+        <div id="statusPercent"
+            style="position: absolute; bottom: 30; left: 50%; right: 5%; height:0.8vw; color: rgb(255,255,255); font-size: 1vw; text-align: right; user-select: none;"></div>
+    </div>
+    <loadingText>LOADING</loadingText>
+    <scp939></scp939>
+</body>
+<script type="text/javascript" src="script.js"></script>
+</html>
