@@ -277,9 +277,62 @@ setTimeout(() => {
     }
 }, 4000);
 </script>
+<script>
+    // Блокировка прокрутки
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    // Предотвращаем прокрутку колесиком мыши
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('keydown', preventKeyScroll, { passive: false });
+
+    function preventScroll(e) {
+        // Разрешаем прокрутку только внутри определенных элементов (если нужно)
+        if (e.target.closest('#rectangle')) {
+            return; // Разрешаем прокрутку внутри панели подсказок
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    function preventKeyScroll(e) {
+        // Блокируем клавиши прокрутки: пробел, PageUp, PageDown, стрелки
+        const keys = [' ', 'Spacebar', 'PageUp', 'PageDown', 'ArrowUp', 'ArrowDown'];
+        if (keys.includes(e.key) || e.keyCode === 32 || e.keyCode === 33 || e.keyCode === 34 || 
+            e.keyCode === 38 || e.keyCode === 40) {
+            e.preventDefault();
+            return false;
+        }
+    }
+
+    // Дополнительно: блокируем контекстное меню
+    document.addEventListener('contextmenu', preventScroll, { passive: false });
+
+    // Функции для управления прокруткой (если понадобятся позже)
+    window.enableScroll = function() {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.removeEventListener('wheel', preventScroll);
+        document.removeEventListener('touchmove', preventScroll);
+        document.removeEventListener('keydown', preventKeyScroll);
+        document.removeEventListener('contextmenu', preventScroll);
+    };
+
+    window.disableScroll = function() {
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        document.addEventListener('wheel', preventScroll, { passive: false });
+        document.addEventListener('touchmove', preventScroll, { passive: false });
+        document.addEventListener('keydown', preventKeyScroll, { passive: false });
+        document.addEventListener('contextmenu', preventScroll, { passive: false });
+    };
+    </script>
 </html>
 </body>
 </html>
+
 
 
 
