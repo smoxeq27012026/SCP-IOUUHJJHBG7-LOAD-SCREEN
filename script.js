@@ -33,24 +33,48 @@ var tips_array = [
     img_index = 0,
     img_interval = 8000;
 
-window.onload = function () {
-    // Воспроизведение музыки
+// Функция для запуска музыки
+function playBackgroundMusic() {
     var music = document.getElementById('backgroundMusic');
-    
-    // Попытка автоматического воспроизведения
-    var playPromise = music.play();
-    
-    // Обработка возможных ошибок автовоспроизведения
-    if (playPromise !== undefined) {
-        playPromise.catch(error => {
-            console.log("Автовоспроизведение не сработало, требуется взаимодействие пользователя");
-            // Добавляем обработчик клика для ручного запуска музыки
-            window.addEventListener('click', function() {
-                music.play();
-            }, { once: true }); // Выполнится только один раз
-        });
+    if (music) {
+        // Устанавливаем небольшую громкость для комфорта
+        music.volume = 0.7;
+        
+        // Пытаемся включить музыку
+        var playPromise = music.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log("Музыка успешно запущена");
+            }).catch(error => {
+                console.log("Автовоспроизведение заблокировано, ждем взаимодействия с пользователем");
+                
+                // Создаем обработчик для запуска музыки при клике
+                function startMusicOnInteraction() {
+                    music.play().then(() => {
+                        console.log("Музыка запущена после взаимодействия");
+                        // Удаляем обработчики после успешного запуска
+                        document.removeEventListener('click', startMusicOnInteraction);
+                        document.removeEventListener('keydown', startMusicOnInteraction);
+                        document.removeEventListener('touchstart', startMusicOnInteraction);
+                    });
+                }
+                
+                // Добавляем обработчики для различных событий взаимодействия
+                document.addEventListener('click', startMusicOnInteraction);
+                document.addEventListener('keydown', startMusicOnInteraction);
+                document.addEventListener('touchstart', startMusicOnInteraction);
+            });
+        }
     }
+}
+
+// Основная функция инициализации
+function initPage() {
+    // Запускаем музыку
+    playBackgroundMusic();
     
+    // Настройка подсказок
     window.onclick = changeTip;
     changeTip();
 
@@ -69,3 +93,11 @@ window.onload = function () {
     };
 }
 
+// Запускаем инициализацию когда страница полностью загрузится
+window.onload = initPage;
+
+// Альтернативный вариант: запускаем когда DOM готов
+document.addEventListener('DOMContentLoaded', function() {
+    // Можно попробовать запустить музыку раньше
+    playBackgroundMusic();
+});
